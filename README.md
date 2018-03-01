@@ -1,4 +1,4 @@
-gox11hash
+gox13hash
 ===============
 
 x13 hashing function for Go. Useful for various cryptocurrencies.
