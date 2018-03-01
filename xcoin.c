@@ -15,7 +15,8 @@
 #include "sph_shavite.h"
 #include "sph_simd.h"
 #include "sph_echo.h"
-
+#include "sph_hamsi.h"
+#include "sph_fugue.h"
 
 void xcoin_hash(const char* input, int inputlen, char* output)
 {
@@ -25,12 +26,13 @@ void xcoin_hash(const char* input, int inputlen, char* output)
     sph_skein512_context     ctx_skein;
     sph_jh512_context        ctx_jh;
     sph_keccak512_context    ctx_keccak;
-
-    sph_luffa512_context		ctx_luffa1;
-    sph_cubehash512_context		ctx_cubehash1;
-    sph_shavite512_context		ctx_shavite1;
-    sph_simd512_context		ctx_simd1;
-    sph_echo512_context		ctx_echo1;
+    sph_luffa512_context     ctx_luffa1;
+    sph_cubehash512_context  ctx_cubehash1;
+    sph_shavite512_context   ctx_shavite1;
+    sph_simd512_context      ctx_simd1;
+    sph_echo512_context      ctx_echo1;
+    sph_hamsi512_context     ctx_hamsi;
+    sph_fugue512_context     ctx_fugue;
 
     //these uint512 in the c++ source of the client are backed by an array of uint32
     uint32_t hashA[16], hashB[16];	
@@ -78,6 +80,14 @@ void xcoin_hash(const char* input, int inputlen, char* output)
     sph_echo512_init (&ctx_echo1); 
     sph_echo512 (&ctx_echo1, hashB, 64);   
     sph_echo512_close(&ctx_echo1, hashA); 
+
+    sph_hamsi512_init(&ctx_hamsi);
+    sph_hamsi512 (&ctx_hamsi, hashA, 64);
+    sph_hamsi512_close(&ctx_hamsi, hashB);
+
+    sph_fugue512_init(&ctx_fugue);
+    sph_fugue512 (&ctx_fugue, hashB, 64);
+    sph_fugue512_close(&ctx_fugue, hashA);
 
     memcpy(output, hashA, 32);
 	
