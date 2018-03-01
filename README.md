@@ -1,14 +1,14 @@
 gox11hash
 ===============
 
-x11 hashing function for Go. Useful for various cryptocurrencies.
+x13 hashing function for Go. Useful for various cryptocurrencies.
 
 Usage
 -----
 
 Install
 
-    go get github.com/blockcypher/gox11hash
+    go get github.com/aguycalled/gox11hash
 
 
 See gox11hash_test.go for an example and godoc for additional information. 
